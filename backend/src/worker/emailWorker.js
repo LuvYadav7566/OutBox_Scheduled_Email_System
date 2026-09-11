@@ -82,11 +82,12 @@ worker.on('failed', (job, err) => {
 let lastLoggedRefused = 0;
 
 worker.on('error', (err) => {
-  if (err.message && err.message.includes('ECONNREFUSED')) {
+  const isRefused = err.message && (err.message.includes('ECONNREFUSED') || err.message.includes('enableOfflineQueue') || err.message.includes('closed'));
+  if (isRefused) {
     const now = Date.now();
-    if (now - lastLoggedRefused > 10000) {
+    if (now - lastLoggedRefused > 60000) {
       lastLoggedRefused = now;
-      console.warn(`[Worker Notice] Waiting for Redis on ${redisConfig.host}:${redisConfig.port}... (Run 'npm run redis' in a separate terminal to start local Redis)`);
+      console.warn(`[Worker Notice] Waiting for Redis on ${redisConfig.host || 'Redis server'}... (Emails will still be scheduled & sent via MongoDB fallback!)`);
     }
   } else {
     console.error(`[Worker Event Error] ${err.message}`);
