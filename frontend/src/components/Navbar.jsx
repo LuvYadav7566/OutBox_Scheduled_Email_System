@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('user') || 'null');
+    } catch (e) {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user') || 'null');
+      setUser(storedUser);
+    } catch (e) {
+      setUser(null);
+    }
+  }, [location.pathname]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    setUser(null);
     navigate('/login');
+  };
+
+  const getInitial = (name) => {
+    if (!name) return '👤';
+    return name.charAt(0).toUpperCase();
   };
 
   return (
@@ -36,11 +57,16 @@ const Navbar = () => {
             </Link>
 
             <div className="user-section">
-              <div className="user-badge">
-                <span className="user-name">{user.name}</span>
-                <span className="user-email">{user.email}</span>
+              <div className="user-profile-pill">
+                <div className="user-avatar">
+                  {getInitial(user.name)}
+                </div>
+                <div className="user-badge">
+                  <span className="user-name">{user.name || 'User'}</span>
+                  {user.email && <span className="user-email">{user.email}</span>}
+                </div>
               </div>
-              <button onClick={handleLogout} className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.82rem' }}>
+              <button onClick={handleLogout} className="btn btn-secondary" style={{ padding: '0.4rem 0.85rem', fontSize: '0.82rem' }}>
                 Logout
               </button>
             </div>
