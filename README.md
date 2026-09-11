@@ -332,9 +332,3 @@ Include common issues:
 - Ethereal credentials invalid
 - Port already in use
 - worker not running
-
----
-
-## License
-
-MIT License
