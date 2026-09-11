@@ -2,7 +2,13 @@
 
 A full-stack, production-quality web application built with **Node.js, Express, MongoDB, Redis, BullMQ, React (Vite), and Nodemailer (Ethereal Email)**.
 
-The system allows authenticated users to compose and schedule emails for future delivery, view real-time delivery status metrics, cancel pending emails, and ensure seamless delivery persistence even across backend server restarts.
+---
+
+## 🌐 Live Demo & Deployment Links
+
+- 🚀 **Live Web Application (Vercel Frontend)**: [https://out-box-scheduled-email-system.vercel.app](https://out-box-scheduled-email-system.vercel.app)
+- ⚙️ **Live Backend API Service (Render)**: [https://outbox-scheduled-email-system.onrender.com/api](https://outbox-scheduled-email-system.onrender.com/api)
+- 🏥 **API Health Check**: [https://outbox-scheduled-email-system.onrender.com/api/health](https://outbox-scheduled-email-system.onrender.com/api/health)
 
 ---
 
